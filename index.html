@@ -156,7 +156,7 @@ thead th{position:sticky;top:calc(env(safe-area-inset-top,0px) + var(--tabh,46px
 <div id="p1" role="tabpanel" aria-labelledby="t1">
 <div class="msort"><select id="ms" aria-label="Urutkan"></select><button class="tbtn" id="md" type="button" style="color:var(--pri)">↓</button></div>
 <div class="wrap"><table>
-<colgroup><col style="width:8%"><col style="width:12%"><col style="width:15%"><col style="width:9%"><col style="width:24%"><col style="width:13%"><col style="width:10%"><col style="width:9%"></colgroup>
+<colgroup><col style="width:8%"><col style="width:11%"><col style="width:12%"><col style="width:9%"><col style="width:20%"><col style="width:11%"><col style="width:12%"><col style="width:9%"><col style="width:8%"></colgroup>
 <thead><tr id="hr"></tr></thead><tbody id="tb"></tbody></table></div>
 </div>
 <div id="p2" role="tabpanel" aria-labelledby="t2" hidden><div class="inv" id="iv"></div></div>
@@ -244,7 +244,7 @@ function parseDs(r){
 }
 DATA.forEach(function(r){r.pa=parseDs(r);r.mt=r.j==="masuk"&&!r.dis.length});
 var st={tab:1,key:"t",dir:-1};
-var COLS=[["t","Tgl masuk / keluar"],["no","Nomor surat"],["a","Asal / Tujuan"],["k","Kategori"],["i","Isi surat"],["p","Pelaksanaan"],["dis","Disposisi kepada"],["l","Surat"]];
+var COLS=[["t","Tgl masuk / keluar"],["no","Nomor surat"],["a","Asal / Tujuan"],["k","Kategori"],["i","Isi surat"],["p","Pelaksanaan"],["lok","Lokasi"],,["dis","Disposisi kepada"],["l","Surat"]];
 function val(r,k){if(k==="dis")return r.dis.join(", ");if(k==="l")return safe(r.l)?"ada":"";return r[k]||""}
 // init controls
 function fillFilters(){var cats=[],pen=[];
@@ -267,7 +267,7 @@ function filt(base){
 function planTxt(r){
  if(!r.p)return'<span class="mut">—</span>';
  var n=dd(r.p),og=n<0&&dd(endOf(r))>=0,c=(n>=0&&n<=1)||og?"w":n>1?"rl":"mut";
- return'<div><span class="tg">'+esc(rng(r))+'</span></div><div class="'+c+'">'+(og?"Sedang berlangsung":rel(n))+(r.hr>1?' · '+r.hr+' hari':'')+'</div>'+(r.jam?'<div>'+esc(r.jam)+'</div>':"")+(r.lok?'<div class="mut">'+esc(r.lok)+'</div>':"");
+ return'<div><span class="tg">'+esc(rng(r))+'</span></div><div class="'+c+'">'+(og?"Sedang berlangsung":rel(n))+(r.hr>1?' · '+r.hr+' hari':'')+'</div>'+(r.jam?'<div>'+esc(r.jam)+'</div>':"");
 }
 function chips(r){
  if(r.j==="keluar")return'<span class="mut">—</span>';
@@ -301,7 +301,7 @@ function renderAll(){
   '<td data-l="Asal / Tujuan"><span class="tag '+(r.j==="masuk"?"in":"out")+'">'+(r.j==="masuk"?"Masuk":"Keluar")+'</span><div>'+esc(r.a)+'</div></td>'+
   '<td data-l="Kategori" class="ctr">'+kc(r.k)+'</td>'+
   '<td data-l="Isi surat">'+esc(r.i)+'</td>'+
-  '<td data-l="Pelaksanaan"'+(r.p?"":' class="e"')+'>'+planTxt(r)+'</td>'+
+  '<td data-l="Pelaksanaan"'+(r.p?"":' class="e"')+'>'+planTxt(r)+'</td>'+'<td data-l="Lokasi"'+(r.lok?"":' class="e"')+'>'+(r.lok?esc(r.lok):'<span class="mut">—</span>')+'</td>'+
   '<td data-l="Disposisi kepada">'+chips(r)+'</td>'+
   
   '<td data-l="Surat">'+btn(r)+'</td></tr>'}).join(""):'<tr><td class="empty">Tidak ada surat yang cocok.</td></tr>';
