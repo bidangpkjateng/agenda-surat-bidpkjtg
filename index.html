@@ -218,7 +218,7 @@ function build(rows){
   else if(/zoom|online/i.test(lok)&&!/^daring/i.test(lok))lok="Daring \u00b7 "+lok;
   else if(!lok&&z&&z!=="-")lok="Daring";
   if(j==="masuk")g(r,"tg").split(/[,;\/]+/).forEach(function(x){x=x.trim();if(x){x=nm(x);if(dis.indexOf(x)<0)dis.push(x)}});
-  var o={j:j,k:tc(g(r,"k")),a:a,no:no,t:pdate(g(r,"t"),th)||pdate(g(r,"tm"),th),i:ps,jam:fj(g(r,"jam")),lok:lok,dis:dis,ds:g(r,"ds"),dk:g(r,"dk"),db:g(r,"db"),l:g(r,"l"),dates:ds};
+  var o={j:j,k:tc(g(r,"k")),a:a,no:no,t:pdate(g(r,"tm"),th)||pdate(g(r,"t"),th),i:ps,jam:fj(g(r,"jam")),lok:lok,dis:dis,ds:g(r,"ds"),dk:g(r,"dk"),db:g(r,"db"),l:g(r,"l"),dates:ds};
   last[key]=o;out.push(o)}
  out.forEach(function(o){o.dates.sort();o.p=o.dates[0]||"";o.hr=o.dates.length||1;o.pa=o.ds?[{n:"",x:o.ds}]:[];o.mt=o.j==="masuk"&&!o.dis.length&&!o.dk&&!o.db&&!o.ds});
  return out}
