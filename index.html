@@ -222,7 +222,7 @@ function build(rows){
   else if(/zoom|online/i.test(lok)&&!/^daring/i.test(lok))lok="Daring \u00b7 "+lok;
   else if(!lok&&z&&z!=="-")lok="Daring";
   if(j==="masuk")g(r,"tg").split(/[,;\/]+/).forEach(function(x){x=x.trim();if(x){x=nm(x);if(dis.indexOf(x)<0)dis.push(x)}});
-  var o={j:j,k:tc(g(r,"k")),a:a,no:no,t:pdate(g(r,"tm"),th)||pdate(g(r,"t"),th),i:ps,jam:fj(g(r,"jam")),lok:lok,dis:dis,ds:g(r,"ds"),dk:g(r,"dk"),db:g(r,"db"),l:g(r,"l"),dates:ds};
+  var o={j:j,k:tc(g(r,"k")),a:a,no:no,t:pdate(g(r,"tm"),th)||pdate(g(r,"t"),th),i:ps,jam:fj(g(r,"jam")),lok:lok,dis:dis,ds:g(r,"ds"),dk:g(r,"dk"),db:g(r,"db"),l:g(r,"l"),dates:ds,z:(z&&z!=="-")?z.replace(/\s+/g,""):""};
   last[key]=o;out.push(o)}
  out.forEach(function(o){o.dates.sort();o.p=o.dates[0]||"";o.hr=o.dates.length||1;o.pa=o.ds?[{n:"",x:o.ds}]:[];o.mt=o.j==="masuk"&&!o.dis.length&&!o.dk&&!o.db&&!o.ds});
  return out}
@@ -358,7 +358,7 @@ function mkEvents(){
  var g={};EVS=[];
  DATA.filter(function(r){return r.p}).sort(function(a,b){return a.t<b.t?-1:a.t>b.t?1:0}).forEach(function(r){
   var key=null;
-  if(r.j==="keluar"&&r.lok)key=(/^daring/i.test(r.lok)?"d|"+norm(r.i):"l|"+norm(r.lok))+"|"+r.dates.join(",")+"|"+r.jam;
+  if(r.j==="keluar"&&(r.z||r.lok))key=(r.z?"z|"+r.z:/^daring/i.test(r.lok)?"d|"+norm(r.i):"l|"+norm(r.lok))+"|"+r.dates.join(",")+"|"+r.jam;
   var e=key&&g[key];
   if(!e){e={rows:[]};if(key)g[key]=e;EVS.push(e)}
   e.rows.push(r)});
