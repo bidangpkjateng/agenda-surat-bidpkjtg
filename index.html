@@ -390,6 +390,9 @@ function dayCard(r){return'<button type="button" class="card" data-e="'+r.id+'">
 st.cy=T.getFullYear();st.cm=T.getMonth();st.sel=off(0);
 var BLN=["Januari","Februari","Maret","April","Mei","Juni","Juli","Agustus","September","Oktober","November","Desember"];
 var GEN={bpbd:1,dinas:1,pemkab:1,pemkot:1,pemprov:1,kab:1,kabupaten:1,kota:1,kementerian:1,badan:1,prov:1,provinsi:1,sekretariat:1,direktorat:1,biro:1,bidang:1,pt:1};
+var PC={};
+function pci(nm){if(!(nm in PC)){var a=[];DATA.forEach(function(r){r.dis.forEach(function(x){if(a.indexOf(x)<0)a.push(x)})});a.sort();a.forEach(function(x,i){PC[x]=i%8})}return PC[nm]||0}
+function pcol(nm){return"background:var(--k"+pci(nm)+");color:var(--kf)"}
 function abbr(e){
  var a=String((e.rows&&e.rows[0]?e.rows[0].a:e.a)||"").split(/[\s.,\/()-]+/).filter(Boolean),
  w=a.filter(function(x){return!GEN[x.toLowerCase()]})[0]||a[0]||"",k=String(e.k||"").split(" ")[0];
@@ -398,7 +401,7 @@ function pelList(sl){
  var g={},no=[],ps=sel();
  sl.forEach(function(e){if(e.dis.length)e.dis.forEach(function(nm){if(!ps.length||ps.indexOf(nm)>=0)(g[nm]=g[nm]||[]).push(e)});else no.push(e)});
  function it(e){return'<button type="button" class="pt" data-e="'+e.id+'"><span class="er">'+kcs(e)+'<b>'+esc(e.i)+'</b></span><span class="mut">'+(e.jam?esc(e.jam):'Jam belum ditentukan')+(e.lok?' · '+esc(e.lok):'')+' · '+esc(e.a)+(e.hr>1?' · Hari ke-'+hk(e,st.sel)+' dari '+e.hr:'')+'</span></button>'}
- var h='<div class="pl">'+Object.keys(g).sort().map(function(nm){return'<div class="pb"><h4>'+esc(nm)+' <small>· '+g[nm].length+' tugas</small></h4>'+g[nm].map(it).join("")+'</div>'}).join("");
+ var h='<div class="pl">'+Object.keys(g).sort().map(function(nm){return'<div class="pb" style="border-left:6px solid var(--k'+pci(nm)+')"><h4 style="color:var(--k'+pci(nm)+')">'+esc(nm)+' <small>· '+g[nm].length+' tugas</small></h4>'+g[nm].map(it).join("")+'</div>'}).join("");
  if(no.length&&!ps.length)h+='<div class="pb"><h4>Tanpa penugasan <small>· '+no.length+' acara</small></h4>'+no.map(it).join("")+'</div>';
  return h+'</div>'}
  function renderCal(){
@@ -409,11 +412,11 @@ function pelList(sl){
  for(var c=0;c<tot;c++){
   var d=new Date(y,m,1-lead+c),k=iso(d),ev=by[k]||[],out=d.getMonth()!==m,it=[],pn=0,seen={};
   if(!out)n+=ev.length;
-  if(cv==="p"){ev.forEach(function(e){e.dis.forEach(function(nm){if(sel().length&&sel().indexOf(nm)<0)return;it.push({e:e,t:nm+" - "+abbr(e)});if(!seen[nm]){seen[nm]=1;pn++}})});it.sort(function(a,b){return a.t<b.t?-1:a.t>b.t?1:0})}
+  if(cv==="p"){ev.forEach(function(e){e.dis.forEach(function(nm){if(sel().length&&sel().indexOf(nm)<0)return;it.push({e:e,n:nm,t:nm+" - "+abbr(e)});if(!seen[nm]){seen[nm]=1;pn++}})});it.sort(function(a,b){return a.t<b.t?-1:a.t>b.t?1:0})}
   var cnt=cv==="p"?pn:ev.length,lb=cv==="p"?pn+" org":ev.length;
   h+='<div class="cc'+(out?" x":"")+(k===iso(T)?" t":"")+(k===st.sel?" s":"")+(cnt>=3?" f":ev.length?" a":"")+'"><button class="dn" type="button" data-d="'+k+'" aria-label="'+esc(fdl(k))+', '+(ev.length?ev.length+' acara':'kosong')+'">'+d.getDate()+(ev.length?'<small>'+(cnt>=3?'Penuh · ':'')+lb+'</small>':'')+'</button>';
   if(cv==="p"){
-   it.slice(0,4).forEach(function(x){h+='<button class="ev pp" type="button" data-e="'+x.e.id+'" aria-label="'+esc(x.t)+'">'+esc(x.t)+'</button>'});
+   it.slice(0,4).forEach(function(x){h+='<button class="ev pp" type="button" style="'+pcol(x.n)+'" data-e="'+x.e.id+'" aria-label="'+esc(x.t)+'">'+esc(x.t)+'</button>'});
    if(it.length>4)h+='<button class="ev mo" type="button" data-d="'+k+'">+'+(it.length-4)+' lagi</button>';
    if(ev.length&&!it.length)h+='<button class="ev mo" type="button" data-d="'+k+'">'+ev.length+' acara</button>';
   }else{
