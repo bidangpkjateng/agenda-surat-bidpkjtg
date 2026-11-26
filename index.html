@@ -390,8 +390,8 @@ function dayCard(r){return'<button type="button" class="card" data-e="'+r.id+'">
 st.cy=T.getFullYear();st.cm=T.getMonth();st.sel=off(0);
 var BLN=["Januari","Februari","Maret","April","Mei","Juni","Juli","Agustus","September","Oktober","November","Desember"];
 var GEN={bpbd:1,dinas:1,pemkab:1,pemkot:1,pemprov:1,kab:1,kabupaten:1,kota:1,kementerian:1,badan:1,prov:1,provinsi:1,sekretariat:1,direktorat:1,biro:1,bidang:1,pt:1};
-var PC={};
-function pci(nm){if(!(nm in PC)){var a=[];DATA.forEach(function(r){r.dis.forEach(function(x){if(a.indexOf(x)<0)a.push(x)})});a.sort();a.forEach(function(x,i){PC[x]=i%8})}return PC[nm]||0}
+var PC={},PO={RIZAL:6};
+function pci(nm){if(!(nm in PC)){var a=[];DATA.forEach(function(r){r.dis.forEach(function(x){if(a.indexOf(x)<0)a.push(x)})});a.sort();a.forEach(function(x,i){PC[x]=i%8})}return PO[nm]!=null?PO[nm]:(PC[nm]||0)}
 function pcol(nm){return"background:var(--k"+pci(nm)+");color:var(--kf)"}
 function abbr(e){
  var a=String((e.rows&&e.rows[0]?e.rows[0].a:e.a)||"").split(/[\s.,\/()-]+/).filter(Boolean),
