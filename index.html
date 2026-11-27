@@ -148,7 +148,7 @@ thead th{position:sticky;top:calc(env(safe-area-inset-top,0px) + var(--tabh,46px
 .rkg{background:var(--surf);border:1px solid var(--line);border-radius:10px;padding:12px 14px}
 .rkg h3{margin:0 0 8px;font-size:15px}
 .rkb{display:flex;align-items:center;gap:6px;margin:4px 0;font-size:12px}
-.rkl{width:76px;flex-shrink:0;color:var(--mut);overflow-wrap:anywhere;font-size:11.5px}
+.rkl{width:88px;flex-shrink:0;color:var(--mut);white-space:nowrap;overflow:hidden;text-overflow:ellipsis;font-size:11.5px}
 .rkt{flex:1;display:flex;align-items:center;background:var(--bg);border-radius:4px;height:20px;min-width:0}
 .rkf{display:flex;align-items:center;justify-content:flex-end;height:20px;border-radius:4px;padding-right:6px;color:var(--kf);font-size:11px;font-weight:600;box-sizing:border-box;min-width:3px}
 .rko{margin-left:5px;font-size:11px;font-weight:600}
@@ -437,6 +437,7 @@ function pelList(sl){
  if(no.length&&!ps.length)h+='<div class="pb"><h4>Tanpa penugasan <small>· '+no.length+' acara</small></h4>'+no.map(it).join("")+'</div>';
  return h+'</div>'}
 var RK={per:"all",jn:"",gr:"k",dt:"t",d:"",s:"",n:-1};
+var RA={"Undangan Acara":"Und. Acara","Permintaan Data":"Perm. Data"};
 var BLS=["Jan","Feb","Mar","Apr","Mei","Jun","Jul","Agu","Sep","Okt","Nov","Des"];
 function kix(k){var i=KN.indexOf(k);if(i<0){i=0;for(var c=0;c<k.length;c++)i=(i*31+k.charCodeAt(c))%7}return i}
 function rkDv(r){return RK.dt==="p"?r.p:r.t}
@@ -476,7 +477,7 @@ function rkDraw(){
  bars=g.map(function(x){
   var w=Math.round(x.n/mx*100),pc=Math.round(base?x.n/base*100:0),st1='width:'+w+'%;background:'+x.c,
   f=w>=14?'<span class="rkf" style="'+st1+'">'+x.n+'</span>':'<span class="rkf" style="'+st1+'"></span><span class="rko">'+x.n+'</span>';
-  return'<div class="rkb"><span class="rkl">'+esc(x.l)+'</span><span class="rkt">'+f+'</span><span class="rkv">'+pc+'%</span></div>'}).join("")||'<div class="mut">Tidak ada data pada periode ini.</div>';
+  return'<div class="rkb"><span class="rkl" title="'+esc(x.l)+'">'+esc(RA[x.l]||x.l)+'</span><span class="rkt">'+f+'</span><span class="rkv">'+pc+'%</span></div>'}).join("")||'<div class="mut">Tidak ada data pada periode ini.</div>';
  var avg=RK.per==="all",tm=[];
  for(i=0;i<12;i++)tm.push({m:0,k:0,y:{}});
  R.forEach(function(r){var v=rkDv(r);if(!v)return;var o=tm[+v.slice(5,7)-1];if(!o)return;o[r.j==="masuk"?"m":"k"]++;o.y[v.slice(0,4)]=1});
