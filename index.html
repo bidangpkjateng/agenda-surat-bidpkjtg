@@ -169,6 +169,13 @@ thead th{position:sticky;top:calc(env(safe-area-inset-top,0px) + var(--tabh,46px
 .rky .rkz td{background:var(--inbg)}
 @media (max-width:1000px){.rk3{grid-template-columns:1fr}}
 @media (max-width:760px){.rkk b{font-size:20px}}
+@media (max-width:760px){
+.rky{display:table;width:100%}
+.rky thead{display:table-header-group}
+.rky tbody{display:table-row-group}
+.rky tr{display:table-row;background:none;border:0;border-radius:0;margin:0;padding:0}
+.rky th,.rky td{display:table-cell;width:auto;padding:6px 4px;font-size:13px;border:1px solid var(--line);text-align:center}
+}
 </style>
 </head>
 <body>
