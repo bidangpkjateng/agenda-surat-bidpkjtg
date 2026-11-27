@@ -382,7 +382,7 @@ $("rs").addEventListener("click",function(){
 function tab(n){
  st.tab=n;
  $("t1").setAttribute("aria-selected",n===1);$("t2").setAttribute("aria-selected",n===2);$("t3").setAttribute("aria-selected",n===3);$("t4").setAttribute("aria-selected",n===4);
- $("p1").hidden=n!==1;$("p2").hidden=n!==2;$("p3").hidden=n!==3;render()}
+ $("p1").hidden=n!==1;$("p2").hidden=n!==2;$("p3").hidden=n!==3;$("p4").hidden=n!==4;render()}
 $("t1").onclick=function(){tab(1)};$("t2").onclick=function(){tab(2)};$("t3").onclick=function(){tab(3)};$("t4").onclick=function(){tab(4)};
 var KN=["Rapat","Narsum","Pelatihan","Permintaan Data","Undangan Acara","Fasilitator","","Lainnya"];
 function kc(k){var i=KN.indexOf(k);if(i<0){i=0;for(var c=0;c<k.length;c++)i=(i*31+k.charCodeAt(c))%7}return'<span class="kat k'+i+'">'+esc(k)+'</span>'}
