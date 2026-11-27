@@ -486,9 +486,9 @@ function rkDraw(){
   f=w>=14?'<span class="rkf" style="'+st1+'">'+x.n+'</span>':'<span class="rkf" style="'+st1+'"></span><span class="rko">'+x.n+'</span>';
   return'<div class="rkb"><span class="rkl" title="'+esc(x.l)+'">'+esc(RA[x.l]||x.l)+'</span><span class="rkt">'+f+'</span><span class="rkv">'+pc+'%</span></div>'}).join("")||'<div class="mut">Tidak ada data pada periode ini.</div>';
  var avg=RK.per==="all",tm=[];
- for(i=0;i<12;i++)tm.push({m:0,k:0,y:{}});
- R.forEach(function(r){var v=rkDv(r);if(!v)return;var o=tm[+v.slice(5,7)-1];if(!o)return;o[r.j==="masuk"?"m":"k"]++;o.y[v.slice(0,4)]=1});
- tm.forEach(function(o){var d=avg?Math.max(1,Object.keys(o.y).length):1;o.m/=d;o.k/=d});
+ for(i=0;i<12;i++)tm.push({m:0,k:0,y:{m:{},k:{}}});
+ R.forEach(function(r){var v=rkDv(r);if(!v)return;var o=tm[+v.slice(5,7)-1];if(!o)return;var t=r.j==="masuk"?"m":"k";o[t]++;o.y[t][v.slice(0,4)]=1});
+ tm.forEach(function(o){o.m/=avg?Math.max(1,Object.keys(o.y.m).length):1;o.k/=avg?Math.max(1,Object.keys(o.y.k).length):1});
  var tx=Math.max.apply(null,tm.map(function(o){return Math.max(o.m,o.k)}).concat([1]));
  function bar(n,c){return'<span class="rkn"><i'+(n?'':' style="opacity:.5"')+'>'+rkF(n)+'</i><b style="height:'+(n?Math.max(3,Math.round(n/tx*80)):2)+'px;background:'+c+'"></b></span>'}
  var tr=tm.map(function(o,j){return'<div class="rkm"><span class="rkp">'+bar(o.m,"var(--k4)")+bar(o.k,"var(--k2)")+'</span><span class="rkx">'+BLS[j]+'</span></div>'}).join(""),
